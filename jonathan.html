@@ -752,6 +752,109 @@
         }
 
         /* ==============================================================
+           8.5. SECCIÓN DE TECNOLOGÍAS PROPUESTAS
+           ============================================================== */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .tech-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 1.75rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .tech-card:hover {
+            border-color: var(--emerald-border);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .tech-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.15rem;
+        }
+
+        .tech-icon-wrap {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-sm);
+            background: var(--emerald-soft);
+            color: var(--emerald-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tech-layer-tag {
+            font-size: 0.74rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--emerald-deep);
+            background: var(--emerald-soft);
+            border: 1px solid var(--emerald-border);
+            padding: 0.25rem 0.65rem;
+            border-radius: var(--radius-full);
+        }
+
+        .tech-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--text-heading);
+            margin-bottom: 0.6rem;
+            letter-spacing: -0.3px;
+        }
+
+        .tech-desc {
+            font-size: 0.92rem;
+            color: var(--text-body);
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+        }
+
+        .tech-pills-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.55rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .tech-pills-list li {
+            font-size: 0.85rem;
+            color: var(--text-body);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            line-height: 1.45;
+        }
+
+        .tech-pills-list li::before {
+            content: '✓';
+            color: var(--emerald-primary);
+            font-weight: 800;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .tech-pills-list strong {
+            color: var(--text-heading);
+        }
+
+        /* ==============================================================
            9. AUTOR Y PIE DE PÁGINA
            ============================================================== */
         .author-footer-card {
@@ -869,6 +972,7 @@
                     <li><a href="#modulos" class="nav-item-link">Módulos</a></li>
                     <li><a href="#funcionales" class="nav-item-link">Requisitos</a></li>
                     <li><a href="#no-funcionales" class="nav-item-link">Criterios</a></li>
+                    <li><a href="#tecnologias" class="nav-item-link">Tecnologías</a></li>
                     <li><a href="#figma" class="nav-item-link">Lienzo Figma</a></li>
                 </ul>
             </nav>
@@ -1344,10 +1448,109 @@
             </div>
         </section>
 
-        <!-- SECCIÓN 4: FIGMA EMBED -->
-        <section class="section-block" id="figma">
+        <!-- SECCIÓN 4: STACK TECNOLÓGICO PROPUESTO -->
+        <section class="section-block" id="tecnologias">
             <div class="section-header-clean">
                 <span class="sec-number">Sección 04</span>
+                <h2>Stack Tecnológico Propuesto</h2>
+                <p>Arquitectura modular y tecnologías seleccionadas para la construcción integral de la plataforma CALJIM.</p>
+            </div>
+
+            <div class="tech-grid">
+                <!-- Frontend -->
+                <article class="tech-card">
+                    <div>
+                        <div class="tech-card-header">
+                            <div class="tech-icon-wrap">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                            </div>
+                            <span class="tech-layer-tag">Capa Frontend / Cliente</span>
+                        </div>
+                        <h3 class="tech-title">HTML5 Semántico + JS Moderno</h3>
+                        <p class="tech-desc">
+                            Interfaz web adaptativa enriquecida con interactividad nativa y librerías especializadas para mapas satelitales y analítica de datos.
+                        </p>
+                    </div>
+                    <ul class="tech-pills-list">
+                        <li><strong>HTML5 Semántico + CSS3</strong>: Maquetación adaptativa accesible y variables globales.</li>
+                        <li><strong>JavaScript ES6+ (Fetch API)</strong>: Peticiones asíncronas para inventario y estados en tiempo real sin recargar página.</li>
+                        <li><strong>Leaflet.js + OpenStreetMap</strong>: Visualización interactiva satelital y rastreo GPS de maquinaria en tiempo real.</li>
+                        <li><strong>Chart.js</strong>: Dashboard analítico con gráficas dinámicas de ventas y volumen despachado en m³.</li>
+                    </ul>
+                </article>
+
+                <!-- Backend -->
+                <article class="tech-card">
+                    <div>
+                        <div class="tech-card-header">
+                            <div class="tech-icon-wrap">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l6-6-6-6"></path><path d="M12 19h8"></path></svg>
+                            </div>
+                            <span class="tech-layer-tag">Capa Backend / Servidor</span>
+                        </div>
+                        <h3 class="tech-title">PHP 8 con Arquitectura MVC</h3>
+                        <p class="tech-desc">
+                            Lógica del servidor estructurada en capas desacopladas, comunicación segura con la base de datos y control de accesos RBAC.
+                        </p>
+                    </div>
+                    <ul class="tech-pills-list">
+                        <li><strong>PHP 8.x</strong>: Motor robusto de procesamiento del lado del servidor.</li>
+                        <li><strong>PDO (PHP Data Objects)</strong>: Consultas preparadas para máxima protección contra inyecciones SQL.</li>
+                        <li><strong>Patrón MVC</strong>: Separación ordenada de responsabilidades en Controladores, Modelos y Vistas.</li>
+                        <li><strong>Control de Acceso RBAC</strong>: Gestión estricta de permisos según los roles Administrador, Operario y Cliente.</li>
+                    </ul>
+                </article>
+
+                <!-- Base de Datos -->
+                <article class="tech-card">
+                    <div>
+                        <div class="tech-card-header">
+                            <div class="tech-icon-wrap">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                            </div>
+                            <span class="tech-layer-tag">Capa de Datos / Persistencia</span>
+                        </div>
+                        <h3 class="tech-title">MySQL / MariaDB (Motor InnoDB)</h3>
+                        <p class="tech-desc">
+                            Almacenamiento relacional diseñado para garantizar atomicidad y consistencia en los despachos, inventarios y finanzas.
+                        </p>
+                    </div>
+                    <ul class="tech-pills-list">
+                        <li><strong>Motor InnoDB</strong>: Soporte nativo para transacciones seguras bajo estándar ACID.</li>
+                        <li><strong>Entorno XAMPP</strong>: Servidor Apache y gestor de datos integrado para desarrollo ágil.</li>
+                        <li><strong>phpMyAdmin</strong>: Consola web para modelado de tablas, relaciones y consultas de prueba.</li>
+                        <li><strong>Políticas de Respaldo</strong>: Esquema de copias de seguridad diarias automatizadas.</li>
+                    </ul>
+                </article>
+
+                <!-- Reportes y Facturación -->
+                <article class="tech-card">
+                    <div>
+                        <div class="tech-card-header">
+                            <div class="tech-icon-wrap">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        </div>
+                        <span class="tech-layer-tag">Servicio de Facturación</span>
+                    </div>
+                    <h3 class="tech-title">DomPDF (Generación de Comprobantes)</h3>
+                    <p class="tech-desc">
+                        Módulo automatizado para la creación de comprobantes fiscales electrónicos y guías de transporte descargables.
+                    </p>
+                    </div>
+                    <ul class="tech-pills-list">
+                        <li><strong>Librería DomPDF</strong>: Renderizado directo de plantillas HTML y CSS a documentos PDF de alta fidelidad.</li>
+                        <li><strong>Facturación Desglosada</strong>: Detalle automático de IVA, volumen en m³, fletes y servicios de maquinaria.</li>
+                        <li><strong>Descarga Inmediata</strong>: Disponibilidad de comprobantes digitales tanto para el cliente como para el conductor.</li>
+                        <li><strong>Historial de Nómina</strong>: Liquidación impresa para operadores de campo según horas efectivas trabajadas.</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 5: FIGMA EMBED -->
+        <section class="section-block" id="figma">
+            <div class="section-header-clean">
+                <span class="sec-number">Sección 05</span>
                 <h2>Prototipo de Interfaz en Figma</h2>
                 <p>Exploración del lienzo interactivo del proyecto con los wireframes y componentes UI.</p>
             </div>
