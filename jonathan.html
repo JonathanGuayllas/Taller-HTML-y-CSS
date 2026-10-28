@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Especificación de Requerimientos CALJIM">
+    <title>CALJIM — Especificación de Requerimientos</title>
+
+    <!-- Tipografía moderna y legible -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            /* Verde Esmeralda & Menta Principal */
+            --emerald-deep: #064e3b;
+            /* Verde bosque profundo */
+            --emerald-primary: #059669;
+            /* Esmeralda vibrante */
+            --emerald-hover: #047857;
+            --emerald-light: #10b981;
+            /* Menta viva */
+            --emerald-soft: #ecfdf5;
+            /* Fondo menta tenue */
+            --emerald-border: #a7f3d0;
+            /* Borde verde sutil */
+            --emerald-glow: rgba(16, 185, 129, 0.15);
+
+            /* Superficies y Fondos Cálidos/Frescos */
+            --bg-page: #f9fbf9;
+            /* Blanco roto con toque menta */
+            --bg-surface: #ffffff;
+            --bg-muted: #f0f5f2;
+            /* Gris salvia claro */
+            --border-light: #e2ece6;
+            /* Borde suavemente verdoso */
+            --border-hover: #cbdcd3;
+
+            /* Tipografía y Textos */
+            --text-heading: #0f172a;
+            /* Pizarra casi negra */
+            --text-body: #334155;
+            /* Grafito óptimo para lectura */
+            --text-muted: #64748b;
+            /* Gris medio */
+            --text-light: #94a3b8;
+
+            /* Tipografía */
+            --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            /* Sombras con tono sutil */
+            --shadow-sm: 0 1px 2px 0 rgba(6, 78, 59, 0.04);
+            --shadow-card: 0 4px 6px -1px rgba(6, 78, 59, 0.05), 0 2px 4px -2px rgba(6, 78, 59, 0.03);
+            --shadow-hover: 0 12px 20px -3px rgba(6, 78, 59, 0.08), 0 4px 6px -4px rgba(6, 78, 59, 0.04);
+
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --radius-full: 9999px;
+            --transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Reseteo amigable */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-page);
+            color: var(--text-body);
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ==============================================================
+           2. HEADER MINIMALISTA & LUMINOSO CON ACENTO ESMERALDA
+           ============================================================== */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .header-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0.85rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        .brand-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .brand-logo-img {
+            height: 34px;
+            width: auto;
+            border-radius: var(--radius-sm);
+        }
+
+        .brand-text {
+            font-size: 1.05rem;
+            font-weight: 800;
+            letter-spacing: -0.4px;
+            color: var(--text-heading);
+        }
+
+        .brand-dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--emerald-primary);
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .brand-tagline {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .main-nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .nav-item-link {
+            text-decoration: none;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            padding: 0.35rem 0.5rem;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+        }
+
+        .nav-item-link:hover {
+            color: var(--emerald-primary);
+            background: var(--emerald-soft);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .btn-figma-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-heading);
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            padding: 0.4rem 0.85rem;
+            border-radius: var(--radius-full);
+            transition: var(--transition);
+        }
+
+        .btn-figma-pill:hover {
+            background: var(--emerald-soft);
+            border-color: var(--emerald-border);
+            color: var(--emerald-deep);
+            transform: translateY(-1px);
+        }
+
+        .author-badge {
+            font-size: 0.8rem;
+            color: var(--emerald-deep);
+            background: var(--emerald-soft);
+            border: 1px solid var(--emerald-border);
+            padding: 0.35rem 0.8rem;
+            border-radius: var(--radius-full);
+            font-weight: 500;
+        }
+
+        .author-badge strong {
+            font-weight: 700;
+            color: var(--emerald-primary);
+        }
+
+        /* ==============================================================
+           3. HERO FRESCO & MINIMALISTA CON RADIAL GLOW
+           ============================================================== */
+        .hero-section {
+            position: relative;
+            padding: 4.5rem 1.5rem 3rem;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* Suave resplandor menta de fondo */
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 550px;
+            height: 300px;
+            background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.12) 0%, rgba(249, 251, 249, 0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .hero-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.76rem;
+            font-weight: 700;
+            color: var(--emerald-hover);
+            background: var(--emerald-soft);
+            border: 1px solid var(--emerald-border);
+            padding: 0.35rem 0.95rem;
+            border-radius: var(--radius-full);
+            margin-bottom: 1.25rem;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+        }
+
+        .hero-title {
+            font-size: clamp(2.1rem, 4.5vw, 2.9rem);
+            font-weight: 800;
+            color: var(--text-heading);
+            line-height: 1.2;
+            letter-spacing: -0.9px;
+            margin-bottom: 1.15rem;
+        }
+
+        .hero-title .highlight-emerald {
+            color: var(--emerald-primary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            max-width: 720px;
+            margin: 0 auto 2.5rem;
+        }
+
+        /* Métricas tipo cápsula minimalista */
+        .metrics-strip {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2.25rem;
+            padding: 1.25rem 2.25rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-full);
+            box-shadow: var(--shadow-card);
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .metric-item {
+            text-align: center;
+        }
+
+        .metric-num {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--emerald-primary);
+            font-family: var(--font-mono);
+            line-height: 1;
+            margin-bottom: 0.2rem;
+        }
+
+        .metric-label {
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-sep {
+            width: 1px;
+            height: 28px;
+            background: var(--border-light);
+        }
+
+        /* ==============================================================
+           4. CONTENEDOR PRINCIPAL
+           ============================================================== */
+        .content-container {
+            max-width: 1050px;
+            margin: 3.5rem auto 5rem;
+            padding: 0 1.5rem;
+        }
+
+        .section-block {
+            margin-bottom: 4.5rem;
+        }
+
+        .section-header-clean {
+            margin-bottom: 1.85rem;
+        }
+
+        .section-header-clean .sec-number {
+            font-size: 0.76rem;
+            font-weight: 800;
+            color: var(--emerald-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .section-header-clean .sec-number::before {
+            content: '';
+            width: 12px;
+            height: 2px;
+            background: var(--emerald-primary);
+            display: inline-block;
+        }
+
+        .section-header-clean h2 {
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: var(--text-heading);
+            letter-spacing: -0.5px;
+        }
+
+        .section-header-clean p {
+            color: var(--text-muted);
+            font-size: 0.96rem;
+            margin-top: 0.25rem;
+        }
+
+        /* ==============================================================
+           5. SECCIÓN 1: MÓDULOS (TARJETAS FRESCAS)
+           ============================================================== */
+        .modules-grid-clean {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .mod-clean-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .mod-clean-card:hover {
+            border-color: var(--emerald-border);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .mod-clean-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .mod-clean-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            background: var(--emerald-soft);
+            color: var(--emerald-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mod-clean-badge {
+            font-size: 0.72rem;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            padding: 0.2rem 0.55rem;
+            border-radius: var(--radius-full);
+            background: var(--bg-muted);
+            color: var(--emerald-deep);
+            border: 1px solid var(--border-light);
+        }
+
+        .mod-clean-card h3 {
+            font-size: 1.08rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 0.45rem;
+        }
+
+        .mod-clean-card p {
+            font-size: 0.9rem;
+            color: var(--text-body);
+            line-height: 1.6;
+        }
+
+        /* ==============================================================
+           6. SECCIÓN 2: LECTURA DE REQUISITOS (MINIMALISTA, CON VIDA)
+           ============================================================== */
+        .filter-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.75rem;
+            padding: 0.85rem 1.15rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .search-wrapper {
+            position: relative;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-icon-svg {
+            position: absolute;
+            left: 0.95rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--emerald-primary);
+            pointer-events: none;
+        }
+
+        .search-clean-input {
+            width: 100%;
+            padding: 0.6rem 1rem 0.6rem 2.45rem;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-family: inherit;
+            background: var(--bg-page);
+            color: var(--text-heading);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-clean-input:focus {
+            background: #ffffff;
+            border-color: var(--emerald-light);
+            box-shadow: 0 0 0 3px var(--emerald-glow);
+        }
+
+        .pill-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+        }
+
+        .pill-tab {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            padding: 0.42rem 0.9rem;
+            border-radius: var(--radius-full);
+            font-size: 0.82rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .pill-tab:hover {
+            color: var(--emerald-deep);
+            background: var(--emerald-soft);
+        }
+
+        .pill-tab.active {
+            background: var(--emerald-primary);
+            color: #ffffff;
+            box-shadow: 0 2px 6px rgba(5, 150, 105, 0.3);
+        }
+
+        /* Lista de Tarjetas de Requisitos */
+        .req-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem;
+        }
+
+        .req-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-left: 4px solid var(--emerald-primary);
+            /* Toque característico esmeralda */
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            padding: 1.45rem 1.75rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+
+        .req-card:hover {
+            border-color: var(--emerald-border);
+            border-left-color: var(--emerald-deep);
+            box-shadow: var(--shadow-hover);
+            transform: translateX(3px);
+        }
+
+        .req-card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .req-id-pill {
+            font-family: var(--font-mono);
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: var(--emerald-deep);
+            background: var(--emerald-soft);
+            border: 1px solid var(--emerald-border);
+            padding: 0.2rem 0.65rem;
+            border-radius: var(--radius-sm);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .req-id-pill::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--emerald-light);
+        }
+
+        .module-badge-tag {
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 0.22rem 0.65rem;
+            border-radius: var(--radius-full);
+            background: var(--bg-muted);
+            color: var(--text-body);
+            border: 1px solid var(--border-light);
+        }
+
+        .req-card-title {
+            font-size: 1.12rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            letter-spacing: -0.3px;
+        }
+
+        .req-card-description {
+            font-size: 0.95rem;
+            color: var(--text-body);
+            line-height: 1.68;
+        }
+
+        /* ==============================================================
+           7. SECCIÓN 3: REQUERIMIENTOS NO FUNCIONALES (RNF)
+           ============================================================== */
+        .rnf-grid-clean {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .rnf-clean-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 1.6rem;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 1.15rem;
+            transition: var(--transition);
+        }
+
+        .rnf-clean-box:hover {
+            border-color: var(--emerald-border);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .rnf-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.6rem;
+        }
+
+        .rnf-code-tag {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--emerald-deep);
+            background: var(--emerald-soft);
+            border: 1px solid var(--emerald-border);
+            padding: 0.2rem 0.6rem;
+            border-radius: var(--radius-sm);
+        }
+
+        .rnf-cat-name {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--emerald-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .rnf-clean-box h3 {
+            font-size: 1.08rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 0.45rem;
+        }
+
+        .rnf-clean-box p {
+            font-size: 0.91rem;
+            color: var(--text-body);
+            line-height: 1.65;
+        }
+
+        .rnf-kpi-pill {
+            background: var(--emerald-soft);
+            border: 1px solid var(--emerald-border);
+            border-radius: var(--radius-sm);
+            padding: 0.55rem 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.84rem;
+        }
+
+        .rnf-kpi-pill .kpi-lbl {
+            color: var(--emerald-deep);
+            font-weight: 600;
+        }
+
+        .rnf-kpi-pill .kpi-val {
+            font-family: var(--font-mono);
+            font-weight: 800;
+            color: var(--emerald-primary);
+        }
+
+        /* ==============================================================
+           8. SECCIÓN 4: FIGMA EMBED MODERNO
+           ============================================================== */
+        .figma-container-clean {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .figma-header-bar {
+            padding: 1.15rem 1.6rem;
+            background: #ffffff;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .figma-header-info h3 {
+            font-size: 1.02rem;
+            font-weight: 700;
+            color: var(--text-heading);
+        }
+
+        .figma-header-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .btn-figma-external {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--emerald-primary);
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.5rem 1.1rem;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            box-shadow: 0 2px 4px rgba(5, 150, 105, 0.25);
+        }
+
+        .btn-figma-external:hover {
+            background: var(--emerald-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(5, 150, 105, 0.35);
+        }
+
+        .figma-frame-box {
+            width: 100%;
+            height: 600px;
+            background: #f8fafc;
+        }
+
+        .figma-frame-box iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        /* ==============================================================
+           9. AUTOR Y PIE DE PÁGINA
+           ============================================================== */
+        .author-footer-card {
+            margin-top: 3.5rem;
+            padding: 1.75rem 2rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1.25rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .author-footer-card h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-heading);
+        }
+
+        .author-footer-card p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-top: 0.2rem;
+        }
+
+        .team-inline {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .member-tag {
+            font-size: 0.8rem;
+            padding: 0.3rem 0.75rem;
+            border-radius: var(--radius-full);
+            background: var(--bg-muted);
+            color: var(--text-body);
+            font-weight: 500;
+        }
+
+        .member-tag.lead {
+            background: var(--emerald-soft);
+            color: var(--emerald-deep);
+            border: 1px solid var(--emerald-border);
+            font-weight: 700;
+        }
+
+        .site-footer {
+            border-top: 1px solid var(--border-light);
+            background: #ffffff;
+            padding: 2.25rem 1.5rem;
+            text-align: center;
+            font-size: 0.86rem;
+            color: var(--text-muted);
+            margin-top: 3rem;
+        }
+
+        .site-footer a {
+            color: var(--emerald-primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .site-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ==============================================================
+           10. MEDIA QUERIES (ADAPTABILIDAD RESPONSIVA)
+           ============================================================== */
+        @media (max-width: 820px) {
+            .main-nav {
+                display: none;
+            }
+
+            .metrics-strip {
+                border-radius: var(--radius-md);
+                gap: 1rem;
+            }
+
+            .metric-sep {
+                display: none;
+            }
+
+            .hero-section {
+                padding: 3rem 1rem 2rem;
+            }
+
+            .req-card {
+                padding: 1.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ==============================================================
+         HEADER LIMPIO CON TOQUE ESMERALDA
+         ============================================================== -->
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="#inicio" class="brand-link">
+                <img src="img/Logo.png" alt="Logo_CALJIM" class="brand-logo-img">
+                <span class="brand-text">CALJIM</span>
+                <span class="brand-dot"></span>
+                <span class="brand-tagline">Requisitos de Software</span>
+            </a>
+
+            <nav>
+                <ul class="main-nav">
+                    <li><a href="#modulos" class="nav-item-link">Módulos</a></li>
+                    <li><a href="#funcionales" class="nav-item-link">Requisitos</a></li>
+                    <li><a href="#no-funcionales" class="nav-item-link">Criterios</a></li>
+                    <li><a href="#figma" class="nav-item-link">Lienzo Figma</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="https://www.figma.com/design/Hknfu5xfvyn8grbz9UGrac/CALJIM_Figma?node-id=0-1" target="_blank"
+                    rel="noopener noreferrer" class="btn-figma-pill">
+                    <svg width="13" height="13" viewBox="0 0 38 57" fill="none">
+                        <path
+                            d="M19 28.5C19 23.2533 23.2533 19 28.5 19C33.7467 19 38 23.2533 38 28.5C38 33.7467 33.7467 38 28.5 38C23.2533 38 19 33.7467 19 28.5Z"
+                            fill="#1ABCFE" />
+                        <path
+                            d="M0 47.5C0 42.2533 4.25329 38 9.5 38H19V47.5C19 52.7467 14.7467 57 9.5 57C4.25329 57 0 52.7467 0 47.5Z"
+                            fill="#0ACF83" />
+                        <path d="M19 0V19H28.5C33.7467 19 38 14.7467 38 9.5C38 4.25329 33.7467 0 28.5 0H19Z"
+                            fill="#FF7262" />
+                        <path d="M0 9.5C0 14.7467 4.25329 19 9.5 19H19V0H9.5C4.25329 0 0 4.25329 0 9.5Z"
+                            fill="#F24E1E" />
+                        <path d="M0 28.5C0 33.7467 4.25329 38 9.5 38H19V19H9.5C4.25329 19 0 23.2533 0 28.5Z"
+                            fill="#A259FF" />
+                    </svg>
+                    <span>Figma</span>
+                </a>
+                <span class="author-badge">Maqueta: <strong>Jonathan G.</strong></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==============================================================
+         HERO SECTION: ESMERALDA & MENTA TECH
+         ============================================================== -->
+    <section class="hero-section" id="inicio">
+        <span class="hero-chip">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            Especificación de Requerimientos SRS v1.0
+        </span>
+        <h1 class="hero-title">
+            Plataforma Operativa <span class="highlight-emerald">CALJIM</span>
+        </h1>
+        <p class="hero-desc">
+            Documentación técnica estructurada para la gestión de materiales áridos, telemetría de maquinaria pesada,
+            flujo logístico de pedidos y facturación electrónica.
+        </p>
+
+        <!-- Barra de métricas rápidas con acento esmeralda -->
+        <div class="metrics-strip">
+            <div class="metric-item">
+                <div class="metric-num">12</div>
+                <div class="metric-label">Requisitos RF</div>
+            </div>
+            <div class="metric-sep"></div>
+            <div class="metric-item">
+                <div class="metric-num">05</div>
+                <div class="metric-label">Módulos</div>
+            </div>
+            <div class="metric-sep"></div>
+            <div class="metric-item">
+                <div class="metric-num">05</div>
+                <div class="metric-label">Criterios RNF</div>
+            </div>
+            <div class="metric-sep"></div>
+            <div class="metric-item">
+                <div class="metric-num">99.5%</div>
+                <div class="metric-label">Uptime Cloud</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==============================================================
+         CONTENIDO PRINCIPAL
+         ============================================================== -->
+    <main class="content-container">
+
+        <!-- SECCIÓN 1: MÓDULOS DEL SISTEMA -->
+        <section class="section-block" id="modulos">
+            <div class="section-header-clean">
+                <span class="sec-number">Sección 01</span>
+                <h2>Módulos del Sistema</h2>
+                <p>Estructura modular diseñada para conectar operaciones de campo, despacho y administración central.
+                </p>
+            </div>
+
+            <div class="modules-grid-clean">
+                <article class="mod-clean-card">
+                    <div class="mod-clean-header">
+                        <div class="mod-clean-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                                </path>
+                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                            </svg>
+                        </div>
+                        <span class="mod-clean-badge">RF-01, RF-02</span>
+                    </div>
+                    <h3>Materiales e Inventario</h3>
+                    <p>Control de stock de áridos en tiempo real, catálogo interactivo con fotos y cálculo automático
+                        por m³.</p>
+                </article>
+
+                <article class="mod-clean-card">
+                    <div class="mod-clean-header">
+                        <div class="mod-clean-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="1" y="3" width="15" height="13"></rect>
+                                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                                <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                                <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                            </svg>
+                        </div>
+                        <span class="mod-clean-badge">RF-03 &bull; RF-05</span>
+                    </div>
+                    <h3>Logística y Despacho</h3>
+                    <p>Sincronización tripartita de pedidos, seguimiento GPS satelital en vivo y auditoría de rutas
+                        viales.</p>
+                </article>
+
+                <article class="mod-clean-card">
+                    <div class="mod-clean-header">
+                        <div class="mod-clean-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <path
+                                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                                </path>
+                            </svg>
+                        </div>
+                        <span class="mod-clean-badge">RF-06, RF-07</span>
+                    </div>
+                    <h3>Maquinaria y Taller</h3>
+                    <p>Monitoreo de disponibilidad de equipos y programación preventiva/correctiva según horómetro.</p>
+                </article>
+
+                <article class="mod-clean-card">
+                    <div class="mod-clean-header">
+                        <div class="mod-clean-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            </svg>
+                        </div>
+                        <span class="mod-clean-badge">RF-08, RF-09</span>
+                    </div>
+                    <h3>Talento Humano & Nómina</h3>
+                    <p>Marcación digital de jornadas en campo y cálculo automático de nómina por horas laboradas y
+                        extras.</p>
+                </article>
+
+                <article class="mod-clean-card">
+                    <div class="mod-clean-header">
+                        <div class="mod-clean-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="1" x2="12" y2="23"></line>
+                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                            </svg>
+                        </div>
+                        <span class="mod-clean-badge">RF-10 &bull; RF-12</span>
+                    </div>
+                    <h3>Facturación & Finanzas</h3>
+                    <p>Facturación electrónica, desglose de IVA y fletes, analítica comercial interactiva con KPIs.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: REQUERIMIENTOS FUNCIONALES (LECTURA MINIMALISTA & VIBRANTE) -->
+        <section class="section-block" id="funcionales">
+            <div class="section-header-clean">
+                <span class="sec-number">Sección 02</span>
+                <h2>Requerimientos Funcionales</h2>
+                <p>Lista organizada y filtrable de requerimientos con tipografía optimizada para lectura descansada.</p>
+            </div>
+
+            <!-- Filtro y buscador interactivo con toque esmeralda -->
+            <div class="filter-bar">
+                <div class="search-wrapper">
+                    <svg class="search-icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" id="searchReq" class="search-clean-input"
+                        placeholder="Buscar requisito por nombre o detalle..." onkeyup="filterRequirements()">
+                </div>
+
+                <div class="pill-filters" id="filterTabs">
+                    <button class="pill-tab active" onclick="filterByTag('todos', this)">Todos (12)</button>
+                    <button class="pill-tab" onclick="filterByTag('Materiales', this)">Materiales</button>
+                    <button class="pill-tab" onclick="filterByTag('Logística', this)">Logística</button>
+                    <button class="pill-tab" onclick="filterByTag('Maquinaria', this)">Maquinaria</button>
+                    <button class="pill-tab" onclick="filterByTag('Talento', this)">Talento Humano</button>
+                    <button class="pill-tab" onclick="filterByTag('Facturación', this)">Finanzas</button>
+                </div>
+            </div>
+
+            <!-- Lista de tarjetas editoriales con acento lateral esmeralda -->
+            <div class="req-list" id="reqList">
+
+                <!-- RF-01 -->
+                <article class="req-card" data-category="Materiales">
+                    <div class="req-card-top">
+                        <span class="req-id-pill">RF-01</span>
+                        <span class="module-badge-tag">Materiales e Inventario</span>
+                    </div>
+                    <h3 class="req-card-title">Gestión y Consulta de Inventario en Tiempo Real</h3>
+                    <p class="req-card-description">
+                        El sistema debe permitir a los administradores registrar, actualizar y dar de baja el stock de
+                        materiales áridos. Los clientes podrán visualizar en la web la disponibilidad actualizada de
+                        cada producto en vivo.
+                    </p>
+                </article>
+
+                <!-- RF-02 -->
+                <article class="req-card" data-category="Materiales">
+                    <div class="req-card-top">
+                        <span class="req-id-pill">RF-02</span>
+                        <span class="module-badge-tag">Materiales e Inventario</span>
+                    </div>
+                    <h3 class="req-card-title">Cálculo y Selección de Volumen en Metros Cúbicos (m³)</h3>
+                    <p class="req-card-description">
+                        La interfaz de pedido debe permitir al usuario calcular o indicar el volumen necesario en m³,
+                        calculando automáticamente el precio unitario, subtotal y total estimado con impuestos.
+                    </p>
+                </article>
+
+                <!-- RF-03 -->
+                <article class="req-card" data-category="Logística">
+                    <div class="req-card-top">
+                        <span class="req-id-pill">RF-03</span>
+                        <span class="module-badge-tag">Logística y Despacho</span>
+                    </div>
+                    <h3 class="req-card-title">Flujo Optimizado de Pedidos Tripartito</h3>
+                    <p class="req-card-description">
+                        El sistema debe sincronizar el ciclo de vida del pedido entre cliente, operario/conductor
+                        asignado y la administración central, notificando cambios de estado (solicitado, confirmado,
+                        cargado, en tránsito, entregado).
+                    </p>
+                </article>
+
+                <!-- RF-04 -->
+                <article class="req-card" data-category="Logística">
+                    <div class="req-card-top">
+                        <span class="req-id-pill">RF-04</span>
+                        <span class="module-badge-tag">Logística y Despacho</span>
+                    </div>
+                    <h3 class="req-card-title">Monitoreo y Rastreo del Viaje en Tiempo Real</h3>
+                    <p class="req-card-description">
+                        El cliente dispondrá de un mapa interactivo satelital para visualizar el trayecto en tiempo real
+                        del vehículo que transporta su pedido hasta el lugar de entrega programado.
+                    </p>
+                </article>
+
+                <!-- RF-05 -->
+                <article class="req-card" data-category="Logística">
+                    <div class="req-card-top">
+                        <span class="req-id-pill">RF-05</span>
+                        <span class="module-badge-tag">Logística y Despacho</span>
+                    </div>
+                    <h3 class="req-card-title">Trazabilidad y Rutas de Maquinaria Pesada</h3>
+                    <p class="req-card-description">
+                        El sistema registrará la ruta georreferenciada de los operarios al conducir maquinaria pesada,
+                        generando históricos de velocidad, trayecto, tiempos de parada y auditoría operativa.
+                    </p>
+                </article>
+
+                <!-- RF-06 -->
+                <article class="req-card" data-category="Maquinaria">
+                    <div class="req-card-top">
+                        <span class="req-id-pill">RF-06</span>
+                        <span class="module-badge-tag">Maquinaria y Mantenimiento</span>
+                    </div>
+                    <h3 class="req-card-title">Control de Estados de Equipos y Maquinaria</h3>
+                    <p class="req-card-description">
+                        El sistema debe clasificar y mostrar en tiempo real el estado de cada unidad de maquinaria
+                        pesada: Disponibles, Alquilado, En Ruta y En Mantenimiento.
+                    </p>
+                </article>
+
+                <!-- RF-07 -->
+                <article class="req-card" data-category="Maquinaria">
+                    <div class="req-card-top">
+                        <span class="req-id-pill">RF-07</span>
+                        <span class="module-badge-tag">Maquinaria y Mantenimiento</span>
+                    </div>
+                    <h3 class="req-card-title">Gestión de Mantenimiento Preventivo y Correctivo</h3>
+                    <p class="req-card-description">
+                        Permite programar alertas automáticas de mantenimiento por horas de uso/kilometraje y registrar
+                        intervenciones correctivas, repuestos utilizados, historial y costos asociados.
+                    </p>
+                </article>
+
+                <!-- RF-08 -->
+                <article class="req-card" data-category="Talento">
+                    <div class="req-card-top">
+                        <span class="req-id-pill">RF-08</span>
+                        <span class="module-badge-tag">Talento Humano y Nómina</span>
+                    </div>
+                    <h3 class="req-card-title">Registro Digital de Horas Laborales</h3>
+                    <p class="req-card-description">
+                        Registro sistemático de las jornadas y horas efectivas trabajadas por cada operario mediante
+                        marcación digital o asignación a órdenes de trabajo en campo.
+                    </p>
+                </article>
+
+                <!-- RF-09 -->
+                <article class="req-card" data-category="Talento">
+                    <div class="req-card-top">
+                        <span class="req-id-pill">RF-09</span>
+                        <span class="module-badge-tag">Talento Humano y Nómina</span>
+                    </div>
+                    <h3 class="req-card-title">Liquidación Automatizada de Pagos y Nómina</h3>
+                    <p class="req-card-description">
+                        El sistema calculará el valor neto a pagar a cada trabajador en función de las horas laboradas,
+                        horas extra y tarifas preconfiguradas, emitiendo comprobantes de liquidación.
+                    </p>
+                </article>
+
+                <!-- RF-10 -->
+                <article class="req-card" data-category="Facturación">
+                    <div class="req-card-top">
+                        <span class="req-id-pill">RF-10</span>
+                        <span class="module-badge-tag">Comunicación Operativa</span>
+                    </div>
+                    <h3 class="req-card-title">Canal de Comunicación / Mensajería Interna</h3>
+                    <p class="req-card-description">
+                        Módulo de mensajería interna y notificaciones push entre la administración y los operadores en
+                        campo para asignación de tareas, cambios de ruta e incidencias mecánicas.
+                    </p>
+                </article>
+
+                <!-- RF-11 -->
+                <article class="req-card" data-category="Facturación">
+                    <div class="req-card-top">
+                        <span class="req-id-pill">RF-11</span>
+                        <span class="module-badge-tag">Facturación y Finanzas</span>
+                    </div>
+                    <h3 class="req-card-title">Emisión de Facturación Electrónica</h3>
+                    <p class="req-card-description">
+                        Generación y descarga de facturas y comprobantes detallados con desglose de IVA, metros cúbicos
+                        de árido, costo de flete/transporte y servicios de alquiler adicionales.
+                    </p>
+                </article>
+
+                <!-- RF-12 -->
+                <article class="req-card" data-category="Facturación">
+                    <div class="req-card-top">
+                        <span class="req-id-pill">RF-12</span>
+                        <span class="module-badge-tag">Facturación y Finanzas</span>
+                    </div>
+                    <h3 class="req-card-title">Métricas y Reportes Analíticos de Ventas</h3>
+                    <p class="req-card-description">
+                        Dashboard interactivo con analítica de negocios: gráficas de volumen despachado, ventas brutas y
+                        netas, filtrables dinámicamente por día, mes o año.
+                    </p>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: REQUERIMIENTOS NO FUNCIONALES (RNF) -->
+        <section class="section-block" id="no-funcionales">
+            <div class="section-header-clean">
+                <span class="sec-number">Sección 03</span>
+                <h2>Criterios de Calidad</h2>
+                <p>Estándares de resiliencia, seguridad, rendimiento y disponibilidad del sistema.</p>
+            </div>
+
+            <div class="rnf-grid-clean">
+                <!-- RNF-01 -->
+                <article class="rnf-clean-box">
+                    <div>
+                        <div class="rnf-meta">
+                            <span class="rnf-code-tag">RNF-01</span>
+                            <span class="rnf-cat-name">Disponibilidad</span>
+                        </div>
+                        <h3>Alta Disponibilidad Cloud (24/7)</h3>
+                        <p>
+                            La plataforma operará sobre infraestructura cloud garantizando un uptime continuo del 99.5%,
+                            accesible permanentemente desde navegadores modernos.
+                        </p>
+                    </div>
+                    <div class="rnf-kpi-pill">
+                        <span class="kpi-lbl">Objetivo SLA</span>
+                        <span class="kpi-val">&ge; 99.5% Uptime</span>
+                    </div>
+                </article>
+
+                <!-- RNF-02 -->
+                <article class="rnf-clean-box">
+                    <div>
+                        <div class="rnf-meta">
+                            <span class="rnf-code-tag">RNF-02</span>
+                            <span class="rnf-cat-name">Usabilidad</span>
+                        </div>
+                        <h3>Diseño Adaptativo & Mobile-First</h3>
+                        <p>
+                            Interfaz optimizada para terminales de oficina y pantallas táctiles de smartphones o tablets
+                            utilizadas por los operarios en las zonas de obra.
+                        </p>
+                    </div>
+                    <div class="rnf-kpi-pill">
+                        <span class="kpi-lbl">Enfoque UI</span>
+                        <span class="kpi-val">100% Adaptativo</span>
+                    </div>
+                </article>
+
+                <!-- RNF-03 -->
+                <article class="rnf-clean-box">
+                    <div>
+                        <div class="rnf-meta">
+                            <span class="rnf-code-tag">RNF-03</span>
+                            <span class="rnf-cat-name">Rendimiento</span>
+                        </div>
+                        <h3>Velocidad & Geolocalización en Vivo</h3>
+                        <p>
+                            Consultas de catálogo e inventario en menos de 2 segundos, y sincronización satelital
+                            periódica de las unidades en trayecto.
+                        </p>
+                    </div>
+                    <div class="rnf-kpi-pill">
+                        <span class="kpi-lbl">Latencia</span>
+                        <span class="kpi-val">&lt; 2s | 5-10s GPS</span>
+                    </div>
+                </article>
+
+                <!-- RNF-04 -->
+                <article class="rnf-clean-box">
+                    <div>
+                        <div class="rnf-meta">
+                            <span class="rnf-code-tag">RNF-04</span>
+                            <span class="rnf-cat-name">Seguridad</span>
+                        </div>
+                        <h3>Control de Acceso RBAC & Cifrado</h3>
+                        <p>
+                            Mecanismo de autenticación mediante tokens seguros (JWT) con separación estricta de permisos
+                            según los roles de Administrador, Operario y Cliente.
+                        </p>
+                    </div>
+                    <div class="rnf-kpi-pill">
+                        <span class="kpi-lbl">Seguridad</span>
+                        <span class="kpi-val">RBAC + JWT</span>
+                    </div>
+                </article>
+
+                <!-- RNF-05 -->
+                <article class="rnf-clean-box">
+                    <div>
+                        <div class="rnf-meta">
+                            <span class="rnf-code-tag">RNF-05</span>
+                            <span class="rnf-cat-name">Integridad</span>
+                        </div>
+                        <h3>Transaccionalidad & Respaldo Diario</h3>
+                        <p>
+                            Operaciones atómicas (ACID) en base de datos para prevenir inconsistencias financieras,
+                            respaldadas por copias de seguridad diarias automatizadas.
+                        </p>
+                    </div>
+                    <div class="rnf-kpi-pill">
+                        <span class="kpi-lbl">Respaldo</span>
+                        <span class="kpi-val">ACID + Backup 24h</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4: FIGMA EMBED -->
+        <section class="section-block" id="figma">
+            <div class="section-header-clean">
+                <span class="sec-number">Sección 04</span>
+                <h2>Prototipo de Interfaz en Figma</h2>
+                <p>Exploración del lienzo interactivo del proyecto con los wireframes y componentes UI.</p>
+            </div>
+
+            <div class="figma-container-clean">
+                <div class="figma-header-bar">
+                    <div class="figma-header-info">
+                        <h3>Figma Oficial: Prototipo de CALJIM</h3>
+                        <p>Exploración del diseño interactivo figma.</p>
+                    </div>
+                    <a href="https://www.figma.com/design/Hknfu5xfvyn8grbz9UGrac/CALJIM_Figma?node-id=0-1"
+                        target="_blank" rel="noopener noreferrer" class="btn-figma-external">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                        <span>Abrir en Figma</span>
+                    </a>
+                </div>
+
+                <div class="figma-frame-box">
+                    <iframe
+                        src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdesign%2FHknfu5xfvyn8grbz9UGrac%2FCALJIM_Figma%3Fnode-id%3D0-1"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- CRÉDITOS Y EQUIPO -->
+        <aside class="author-footer-card">
+            <div>
+                <h4>Maquetado por Jonathan Guayllas</h4>
+                <p>Proyecto CALJIM.</p>
+            </div>
+            <div class="team-inline">
+                <span class="member-tag lead">Jonathan Guayllas</span>
+                <span class="member-tag">Fabian Cañar</span>
+                <span class="member-tag">Alfonso Ocampo</span>
+            </div>
+        </aside>
+
+    </main>
+
+    <!-- PIE DE PÁGINA SIMPLE -->
+    <footer class="site-footer">
+        <p>&copy; 2026 CALJIM &bull; Especificación de Requerimientos de Software</p>
+        <p style="margin-top: 0.35rem;">
+            <a href="#inicio">Volver arriba &uarr;</a>
+        </p>
+    </footer>
+
+    <!-- SCRIPT DE FILTRADO Y BÚSQUEDA INTERACTIVA -->
+    <script>
+        function filterRequirements() {
+            const query = document.getElementById("searchReq").value.toLowerCase();
+            const cards = document.querySelectorAll("#reqList .req-card");
+
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    card.style.display = "flex";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+
+        function filterByTag(category, btn) {
+            const tabs = document.querySelectorAll("#filterTabs .pill-tab");
+            tabs.forEach(t => t.classList.remove("active"));
+            btn.classList.add("active");
+
+            document.getElementById("searchReq").value = "";
+
+            const cards = document.querySelectorAll("#reqList .req-card");
+            cards.forEach(card => {
+                const cat = card.getAttribute("data-category");
+                if (category === "todos" || cat === category) {
+                    card.style.display = "flex";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
